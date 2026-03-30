@@ -68,7 +68,7 @@ jobs:
 
       - name: Push mirror
         run: |
-         if [-z "${{ secret.MIRROR }}" ]; then
+         if [ -z "${{ secrets.MIRROR }}" ]; then
           echo "No MIRROR secret, skipping push"
           exit 0
          fi
