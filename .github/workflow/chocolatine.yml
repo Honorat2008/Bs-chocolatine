@@ -1,0 +1,71 @@
+name: Chocolatine
+
+on:
+  push:
+    branches-ignore:
+      - 'ga-ignore-*'
+  pull_request:
+    branches-ignore:
+      - 'ga-ignore-*'
+
+env:
+  EXECUTABLE: "a.out"
+
+jobs:
+
+  check:
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Coding style
+        run: banana-check-repo
+
+      - name: Compile
+        run: make
+        timeout-minutes: 2
+        env:
+          CC: epiclang
+
+      - name: Check executable
+        run: |
+          if [ ! -x "$EXECUTABLE" ]; then
+            echo "Executable not found"
+            exit 1
+          fi
+
+      - name: Clean
+        run: make clean
+
+  tests:
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker
+    needs: check
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: make tests_run
+
+  push:
+    runs-on: ubuntu-latest
+    needs: tests
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Push mirror
+        run: |
+          git remote add mirror ${{ secrets.MIRROR }}
+          git push mirror HEAD:main --force
