@@ -22,3 +22,7 @@ fclean:		clean
 
 re:		fclean
 		all
+
+tests_run:
+		@echo "Running tests..."
+		@./test
