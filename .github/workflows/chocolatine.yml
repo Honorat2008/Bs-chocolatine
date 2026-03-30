@@ -68,6 +68,10 @@ jobs:
 
       - name: Push mirror
         run: |
+         if [-z "${{ secret.MIRROR }}" ]; then
+          echo "No MIRROR secret, skipping push"
+          exit 0
+         fi
           git remote remove mirror || true
           git remote add mirror ${{ secrets.MIRROR }}
           git push mirror HEAD:main --force
