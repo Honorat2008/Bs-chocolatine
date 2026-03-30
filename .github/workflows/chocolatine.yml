@@ -46,10 +46,6 @@ jobs:
       image: epitechcontent/epitest-docker
     needs: check
 
-    steps:
-      - uses: actions/checkout@v4
-      - run: make tests_run
-
   push:
     runs-on: ubuntu-latest
     needs: tests
