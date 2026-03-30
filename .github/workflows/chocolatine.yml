@@ -68,5 +68,6 @@ jobs:
 
       - name: Push mirror
         run: |
+          git remote remove mirror || true
           git remote add mirror ${{ secrets.MIRROR }}
           git push mirror HEAD:main --force
