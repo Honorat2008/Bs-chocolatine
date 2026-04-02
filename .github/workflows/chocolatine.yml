@@ -23,7 +23,15 @@ jobs:
 
       - name: Coding style
         run: |
-         banana-check-repo 2>&1 | tee coding-style.log
+          curl -L https://raw.gitubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -o coding-style
+          chmod +x coding-style
+          ./coding-style . > coding-style.log 2>&1 || true
+          cat coding-style.log
+
+          if grep -q "error" coding-style.log; then
+           echo "Coding style errors detected"
+           exit 1
+          fi
 
       - name: Compile
         run: make
