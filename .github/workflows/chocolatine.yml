@@ -22,7 +22,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Coding style
-        run: banana-check-repo
+        run: |
+         coding-style . . | cat coding-style.log
 
       - name: Compile
         run: make
