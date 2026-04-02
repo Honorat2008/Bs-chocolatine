@@ -23,7 +23,7 @@ jobs:
 
       - name: Coding style
         run: |
-          curl -L https://raw.gitubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -o coding-style
+          wget https://raw.gitubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -o coding-style
           chmod +x coding-style
           ./coding-style . > coding-style.log 2>&1 || true
           cat coding-style.log
