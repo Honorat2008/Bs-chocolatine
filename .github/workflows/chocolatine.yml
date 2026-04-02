@@ -23,7 +23,7 @@ jobs:
 
       - name: Coding style
         run: |
-         coding-style . . | cat coding-style.log
+         banana-check-repo 2>&1 | tee coding-style.log
 
       - name: Compile
         run: make
