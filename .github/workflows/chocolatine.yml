@@ -37,19 +37,6 @@ jobs:
             exit 1
           fi
 
-      - name: Display coding style errors as annotations
-        run: |
-          if [ -f coding-style-reports.log ]; then
-            while IFS= read -r line; do
-              file=$(echo "$line" | cut -d':' -f1 | sed 's|^\./||')
-              lineno=$(echo "$line" | cut -d':' -f2)
-              severity=$(echo "$line" | cut -d':' -f3 | tr -d ' ')
-              code=$(echo "$line" | cut -d':' -f4 | tr -d ' ')
-              message=$(echo "$line" | cut -d':' -f5-)
-              echo "::error file=${file},line=${lineno}::${severity} coding style error: ${file}#L${lineno}"$'\n'"${code} -${message}"
-            done < coding-style-reports.log
-          fi
-
       - name: Clean
         run: make clean
 
@@ -77,6 +64,13 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Check MIRROR secret
+        run: |
+          if [ -z "${{ secret.MIRROR }}" ]; then
+            echo "Error: MIRROR secret is not set"
+            exit 1
+          fi
 
       - name: Push mirror
         run: |
