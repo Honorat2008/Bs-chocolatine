@@ -9,7 +9,7 @@ on:
       - 'ga-ignore-*'
 
 env:
-  EXECUTABLE: "test"
+  EXECUTABLE: "a.out"
 
 jobs:
 
@@ -64,13 +64,6 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-      - name: Check MIRROR secret
-        run: |
-          if [ -z "${{ secret.MIRROR }}" ]; then
-            echo "Error: MIRROR secret is not set"
-            exit 1
-          fi
 
       - name: Push mirror
         run: |

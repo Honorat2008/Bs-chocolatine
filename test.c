@@ -11,5 +11,7 @@ int main(void)
 {
     int i=0;
     printf("Hello world.\n");
+    if (i = 0)
+        i ++ ;
     return 0;
 }
