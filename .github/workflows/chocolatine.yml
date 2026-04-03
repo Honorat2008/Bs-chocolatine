@@ -9,7 +9,7 @@ on:
       - 'ga-ignore-*'
 
 env:
-  EXECUTABLE: "a.out"
+  EXECUTABLE: "test"
 
 jobs:
 
@@ -28,9 +28,12 @@ jobs:
         run: |
           input=/tmp/coding-style-reports.log
           while IFS= read -r -a line; do
-            fields=($(printf "%s" "$line"|cut -d':' --output-delimiter=' ' -f1-))
-            echo "::error title=${fields[2]} coding style error,file=${fields[0]},line=${fields[1]}::${fields[3]}"
-          done < $input
+            file=$(echo "$line" | cut -d':' -f1)
+            line_nb=$(echo "$line" | cut -d':' -f2)
+            type=$(echo "$line" | cut -d':' -f3)
+            msg=$(echo "$line" | cut -d':' -f4)
+            echo "::error title=$type coding style error,file=$file,line_nb::$msg"
+          done < "$input"
 
       - name: Compile
         run: make
