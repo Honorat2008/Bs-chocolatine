@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-CC	=	epiclang
+CC	=	clang
 
 SRC	=	test.c
 
