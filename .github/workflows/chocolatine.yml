@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Coding style
-        run: banana-check-repo
+        run: check.sh ./tmp
 
       - name: Create annotation for coding-style errors
         run: |
