@@ -9,7 +9,7 @@ on:
       - 'ga-ignore-*'
 
 env:
-  EXECUTABLE: "a.out"
+  EXECUTABLE: "test"
 
 jobs:
 
