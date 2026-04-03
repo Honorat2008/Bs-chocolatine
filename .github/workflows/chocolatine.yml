@@ -9,7 +9,7 @@ on:
       - 'ga-ignore-*'
 
 env:
-  EXECUTABLE: "a.out"
+  EXECUTABLE: "test"
 
 jobs:
 
@@ -33,7 +33,7 @@ jobs:
       - name: Check executable
         run: |
           if [ ! -x "$EXECUTABLE" ]; then
-            echo "Executable not found"
+            echo "Build Error"
             exit 1
           fi
 
