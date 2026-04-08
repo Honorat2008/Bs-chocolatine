@@ -3,10 +3,10 @@ name: Chocolatine
 on:
   push:
     branches-ignore:
-      - 'ga-ignore-*'
+      - 'no-ga/'
   pull_request:
     branches-ignore:
-      - 'ga-ignore-*'
+      - 'no-ga/'
 
 env:
   EXECUTABLE: "test"
