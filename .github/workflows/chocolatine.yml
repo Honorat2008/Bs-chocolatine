@@ -72,5 +72,5 @@ jobs:
              exit 0
           fi
           git remote remove mirror || true
-          git remote add mirror
+          git remote add mirror "${{ secrets.SSH_KEY }}"
           git push mirror HEAD:main --force
