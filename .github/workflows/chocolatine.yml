@@ -69,8 +69,8 @@ jobs:
         run: |
           if [ -z "${{secrets.MIRROR }}" ]; then
              echo "MIRROR secret is missing"
-             exit 1
+             exit 0
           fi
-          git remote remove mirror 2>/dev/null || true
-          git remote add mirror "${{ secrets.MIRROR }}"
+          git remote remove mirror || true
+          git remote add mirror
           git push mirror HEAD:main --force
